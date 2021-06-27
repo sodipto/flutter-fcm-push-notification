@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "282437628492",
+    "firebase_url": "https://coolcat-37a38.firebaseio.com",
+    "project_id": "coolcat-37a38",
+    "storage_bucket": "coolcat-37a38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282437628492:android:7c3ad6377f5f4274503ae9",
+        "android_client_info": {
+          "package_name": "com.sodipto.fcm_push_notification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282437628492-ifrdg406il6n547clj9q8efah93u727h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGZLoOyHfk3bYWFvgy8FC-bf4OzWyqy3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282437628492-ifrdg406il6n547clj9q8efah93u727h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
