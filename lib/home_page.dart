@@ -88,17 +88,28 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Notification'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'HomePage',
-            ),
-          ],
+      ), body: Center(
+    child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        MaterialButton(
+          color: Colors.green,
+          onPressed: () async {
+            await _messaging.subscribeToTopic('151');
+          },
+          child: Text("Susbcribe To Topic"),
         ),
-      ),
+        MaterialButton(
+          color: Colors.blue,
+          onPressed: () async {
+            await _messaging.unsubscribeFromTopic('151');
+          },
+          child: Text("UnSusbcribe To Topic"),
+        )
+      ],
+    ),
+    ),
     );
   }
 }
