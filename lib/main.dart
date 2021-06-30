@@ -12,8 +12,8 @@ void main() async{
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print("Background message: ${message.messageId}");
+  //await Firebase.initializeApp();
+  print("App Background notification Data ---------: ${message.notification.title}");
 }
 
 class MyApp extends StatelessWidget {

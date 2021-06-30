@@ -1,3 +1,6 @@
+import 'package:fcm_push_notification/firstPage.dart';
+import 'package:fcm_push_notification/secondPage.dart';
+import 'package:fcm_push_notification/thirdPage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -17,34 +20,44 @@ class _HomePageState extends State<HomePage> {
   }
 
   _initMessaging() {
-    var androiInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-
-    var iosInit = IOSInitializationSettings();
-
-    var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
-
-    _notification = FlutterLocalNotificationsPlugin();
-
-    _notification.initialize(initSetting);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print(message.notification.title);
+      print("App Onscreen notification Data -----"+message.notification.title);
       _showNotification(message.notification);
+    });
+
+    //When app running background, notification click call here
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message){
+      if(message!=null){
+        print("Background App Notification Click-----:"+message.notification.title);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SecondPage()),
+        );
+      }
+    });
+
+    //When app terminated, notification click call here
+    FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage message) {
+      if(message!=null){
+        print("Terminated App Notification Click-----:"+ message.notification.title);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ThirdPage()),
+        );
+      }
     });
   }
 
-  _showNotification(RemoteNotification notification) async {
-    // var androidDetails =
-    // AndroidNotificationDetails('1', 'channelName', 'channel Description');
-    //
-    // var iosDetails = IOSNotificationDetails();
-    //
-    // var generalNotificationDetails =
-    // NotificationDetails(android: androidDetails, iOS: iosDetails);
-    //
-    // await _notification.show(0, 'title', 'body', generalNotificationDetails,
-    //     payload: 'Notification');
+   _initNotification() {
+     var androiInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+     var iosInit = IOSInitializationSettings();
+     var initSetting = InitializationSettings(android: androiInit, iOS: iosInit);
 
+     _notification = FlutterLocalNotificationsPlugin();
+     _notification.initialize(initSetting);
+   }
+   _showNotification(RemoteNotification notification) async {
     var androidPlatformChannelSpecifics =
     new AndroidNotificationDetails('id', 'title', 'description',
         playSound: true,
@@ -62,7 +75,6 @@ class _HomePageState extends State<HomePage> {
 
     notificationId++;
   }
-
    _notitficationPermission() async {
     NotificationSettings settings = await _messaging.requestPermission(
       alert: true,
@@ -78,6 +90,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     //_notitficationPermission();
+    _initNotification();
     _initMessaging();
     super.initState();
   }
@@ -106,6 +119,17 @@ class _HomePageState extends State<HomePage> {
             await _messaging.unsubscribeFromTopic('151');
           },
           child: Text("UnSusbcribe To Topic"),
+        ),
+
+        MaterialButton(
+          color: Colors.orange,
+          onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ThirdPage()),
+            );
+          },
+          child: Text("Go to Page"),
         )
       ],
     ),
