@@ -9,6 +9,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+
+import 'observer.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //final bloc = Bloc();
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   FlutterLocalNotificationsPlugin _notification;
   int _notificationId = 0;
@@ -178,6 +182,16 @@ class _HomePageState extends State<HomePage> {
                 await _messaging.unsubscribeFromTopic('151');
               },
               child: Text("UnSusbcribe To Topic"),
+            ),
+            MaterialButton(
+              color: Colors.orange,
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ThirdPage()),
+                );
+              },
+              child: Text("Go to Real Time Update Page"),
             ),
           ],
         ),
