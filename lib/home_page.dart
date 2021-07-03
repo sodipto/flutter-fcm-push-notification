@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:fcm_push_notification/firstPage.dart';
 import 'package:fcm_push_notification/secondPage.dart';
@@ -75,9 +76,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   _showNotification(RemoteMessage payload) async {
+    print("Call notification----------------");
     bool hasImage= payload.data['hasImage']!=null? payload.data['hasImage']=='true'?true:false:false;
     String largeIconPath="https://via.placeholder.com/48x48";
     BigPictureStyleInformation bigPictureStyleInformation;
+    hasImage=hasImage && payload.notification.android.imageUrl!=null && payload.notification.android.imageUrl.isNotEmpty?true:false;
 
     if(hasImage){
       largeIconPath = await _downloadAndSaveFile (payload.notification.android.imageUrl, 'largeIcon');
@@ -91,7 +94,6 @@ class _HomePageState extends State<HomePage> {
           htmlFormatSummaryText: true);
     }
 
-
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'id', 'title', 'description',
         playSound: true,
@@ -99,8 +101,8 @@ class _HomePageState extends State<HomePage> {
         priority: Priority.high,
         autoCancel: true,
         //ongoing: true,
-        enableLights: true,
-        enableVibration: true,
+        //enableLights: true,
+        //enableVibration: true,
         largeIcon: hasImage?FilePathAndroidBitmap(largeIconPath) : null, //for image show when notification not expand state
         styleInformation: hasImage?bigPictureStyleInformation:BigTextStyleInformation('') //for Large image show when notification expand
     );
@@ -124,6 +126,10 @@ class _HomePageState extends State<HomePage> {
     Map<String, dynamic> data = jsonDecode(payload);
     print("App running notification click call--------------------------");
     print(data['id']);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => FirstPage()),
+    );
   }
 
   _notitficationPermission() async {
@@ -173,16 +179,6 @@ class _HomePageState extends State<HomePage> {
               },
               child: Text("UnSusbcribe To Topic"),
             ),
-            MaterialButton(
-              color: Colors.orange,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ThirdPage()),
-                );
-              },
-              child: Text("Go to Page"),
-            )
           ],
         ),
       ),

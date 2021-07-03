@@ -5,9 +5,12 @@ class FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("First Page"),
+        title: Text("প্রথম পেইজ"),
       ),
-      body: Center(child: Text("First Page")),
+      body: Center(child: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Text("যখন অ্যাপ টি ওপেন অবস্থাই নটিফিকেশনে ক্লিক করা হয়, তখন এই পেইজ এ চলে আসে |"),
+      )),
     );
   }
 }
