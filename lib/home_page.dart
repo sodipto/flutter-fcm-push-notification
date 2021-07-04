@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
 import 'package:fcm_push_notification/firstPage.dart';
 import 'package:fcm_push_notification/secondPage.dart';
@@ -9,9 +8,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
-
-import 'observer.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -19,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //final bloc = Bloc();
   FirebaseMessaging _messaging = FirebaseMessaging.instance;
   FlutterLocalNotificationsPlugin _notification;
   int _notificationId = 0;
@@ -159,7 +154,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //_getToken();
+    _getToken();
     return Scaffold(
       appBar: AppBar(
         title: Text('Notification'),
@@ -174,14 +169,14 @@ class _HomePageState extends State<HomePage> {
               onPressed: () async {
                 await _messaging.subscribeToTopic('151');
               },
-              child: Text("Susbcribe To Topic"),
+              child: Text("Subscribe To Topic"),
             ),
             MaterialButton(
               color: Colors.blue,
               onPressed: () async {
                 await _messaging.unsubscribeFromTopic('151');
               },
-              child: Text("UnSusbcribe To Topic"),
+              child: Text("Un-Subscribe To Topic"),
             ),
             MaterialButton(
               color: Colors.orange,

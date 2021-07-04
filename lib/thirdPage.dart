@@ -1,8 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'observer.dart';
 
 class ThirdPage extends StatefulWidget {
   @override
@@ -10,14 +7,15 @@ class ThirdPage extends StatefulWidget {
 }
 
 class _ThirdPageState extends State<ThirdPage> {
-  //FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
-  @override void initState() {
+  @override
+  void initState() {
     super.initState();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print("Third Page notification Data -----" + message.notification.title);
     });
   }
+
   @override
   void dispose() {
     super.dispose();
